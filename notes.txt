@@ -1,0 +1,8 @@
+Live server: npm run dev
+
+Get prettier to work for JSX; 
+https://stackoverflow.com/questions/45285339/prettier-is-not-working-at-react-project
+
+Todo: 
+Assignment at: 
+https://www.theodinproject.com/lessons/node-path-react-new-what-is-jsx

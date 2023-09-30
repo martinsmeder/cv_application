@@ -1,0 +1,12 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: rgb(138, 104, 222) 1px 0 10px;
+}
+
+img {
+    height: 250px;
+}
