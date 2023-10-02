@@ -6,3 +6,12 @@ https://stackoverflow.com/questions/45285339/prettier-is-not-working-at-react-pr
 Todo: 
 Assignment at: 
 https://www.theodinproject.com/lessons/node-path-react-new-what-is-jsx
+
+Stick to camelCase in both html, css and js  (if possible)
+
+Props = Arguments passed into components (think prop = object property)
+
+Use keys when working with data (lists, arrays, objects, etc) to keep track
+of things even when items are moved around, deleted, etc. Don't use index
+as keys since they can change, and don't generate on the fly (like with 
+Math.random()). Keys should remain.
