@@ -1,0 +1,17 @@
+==================== Principle 1: Group related state =====================
+If you always update two or more state variables at the same time, 
+consider merging them into a single state variable.
+
+Exercise 1: Simple Counter
+Task to perform: Create a simple counter component. When you click a "+" 
+button, the counter should increment, and when you click a "-" button, it 
+should decrement.
+
+Exercise 2: Task List with Completed Status
+Task to perform: Build a task list component. Each task should have a title 
+and a completed status. You can mark a task as completed by clicking on it.
+
+Exercise 3: Simple Form Validation
+Task to perform: Create a form with two input fields: "Username" and 
+"Password." Implement basic validation such as ensuring the password is at 
+least 6 characters long.

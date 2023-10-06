@@ -12,7 +12,25 @@ of things even when items are moved around, deleted, etc. Don't use index
 as keys since they can change, and don't generate on the fly (like with 
 Math.random()). Keys should remain.
 
+State variables are only necessary to keep info between re-renders of a 
+component. Don't introduce state variables when a regular variable works fine.
+
 Todo:
-https://react.dev/learn/state-a-components-memory
-Challenges:
-2 --> 3 --> 4
+TOD --> More On State 
+1. Understand choosing the state structure by drilling exercises 
+2. Sharing State Between Components
+
+Structuring state: 
+1. Group related state. If you always update two or more state variables at 
+   the same time, consider merging them into a single state variable.
+2. Avoid contradictions in state. When the state is structured in a way that 
+   several pieces of state may contradict and “disagree” with each other, 
+   you leave room for mistakes. Try to avoid this.
+3. Avoid redundant state. If you can calculate some information from the 
+   component’s props or its existing state variables during rendering, you 
+   should not put that information into that component’s state.
+4. Avoid duplication in state. When the same data is duplicated between 
+   multiple state variables, or within nested objects, it is difficult to 
+   keep them in sync. Reduce duplication when you can.
+5. Avoid deeply nested state. Deeply hierarchical state is not very convenient 
+   to update. When possible, prefer to structure state in a flat way.
