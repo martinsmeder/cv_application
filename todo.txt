@@ -1,0 +1,8 @@
+TOD --> More On State:
+
+2. Project 
+- Write the code yourself, no matter how long it takes
+- Only ask chat GPT to help you understand, not to write the solution for 
+  you 
+- Don't stress, you'll never learn if you do, count on it taking weeks (since 
+  you've never worked with react before)
