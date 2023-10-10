@@ -1,8 +1,21 @@
-TOD --> More On State:
-
-2. Project 
 - Write the code yourself, no matter how long it takes
 - Only ask chat GPT to help you understand, not to write the solution for 
   you 
+- Make heavy use of react documentation, to learn how to find stuff 
 - Don't stress, you'll never learn if you do, count on it taking weeks (since 
   you've never worked with react before)
+
+================================= PLAN =====================================
+1. ---
+2. ---
+3. ---
+4. Get changes in form to be displayed in cv immediately
+5. Implement button to add new education (open form button)
+6. Add education form 
+7. Implement logic to save education  (push to array)
+8. Implement logic to remove education  (remove from array)
+9. Implement logic to edit education  (edit object)
+10. Get changes in education form to be displayed in cv 
+11. Repeat steps 5-10 for practical experience 
+
+State needs to be added to App, so that forms and cv components can share 
