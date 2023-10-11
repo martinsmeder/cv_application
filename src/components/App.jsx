@@ -1,5 +1,25 @@
 import { useState } from 'react';
 
+const initialEducations = [
+  {
+    schoolName: '?',
+    studyTitle: '?',
+    studyDates: '?',
+  },
+
+  {
+    schoolName: '??',
+    studyTitle: '??',
+    studyDates: '??',
+  },
+
+  {
+    schoolName: '???',
+    studyTitle: '???',
+    studyDates: '???',
+  },
+];
+
 function ContactForm({
   fullNameChange,
   emailChange,
@@ -36,36 +56,36 @@ function ContactForm({
   );
 }
 
-function EducationForm({ schoolChange, titleChange, dateChange }) {
-  return (
-    <form className='form'>
-      <input
-        id='schoolName'
-        type='text'
-        placeholder='School name:'
-        onChange={schoolChange}
-      />
-      <input
-        id='studyTitle'
-        type='text'
-        placeholder='Title of study:'
-        onChange={titleChange}
-      />
-      <input
-        id='studyDates'
-        type='text'
-        placeholder='Date of study:'
-        onChange={dateChange}
-      />
-    </form>
-  );
-}
+// function EducationForm({ schoolChange, titleChange, dateChange }) {
+//   return (
+//     <form className='form'>
+//       <input
+//         id='schoolName'
+//         type='text'
+//         placeholder='School name:'
+//         onChange={schoolChange}
+//       />
+//       <input
+//         id='studyTitle'
+//         type='text'
+//         placeholder='Title of study:'
+//         onChange={titleChange}
+//       />
+//       <input
+//         id='studyDates'
+//         type='text'
+//         placeholder='Date of study:'
+//         onChange={dateChange}
+//       />
+//     </form>
+//   );
+// }
 
-function Cv({ contacts, education }) {
+function Cv({ contacts, educations }) {
   return (
     <div id='cvContainer'>
       <CvContacts contacts={contacts} />
-      <CvEducation education={education} />
+      <CvEducation educations={educations} />
     </div>
   );
 }
@@ -83,16 +103,29 @@ function CvContacts({ contacts }) {
   );
 }
 
-function CvEducation({ education }) {
+function CvEducation({ educations }) {
   return (
     <section className='cvSection education'>
       <h1>EDUCATION</h1>
-      <div>
-        <p>{education.schoolName}</p>
-        <p>{education.studyTitle}</p>
-        <p>{education.studyDates}</p>
-      </div>
+      {educations.map((item) => (
+        <div key={item.schoolName}>
+          <p>{item.schoolName}</p>
+          <p>{item.studyTitle}</p>
+          <p>{item.studyDates}</p>
+        </div>
+      ))}
     </section>
+  );
+}
+
+function EducationList({ educations }) {
+  return (
+    <ul className='list'>
+      <h4>EDUCATION</h4>
+      {educations.map((item) => (
+        <p key={item.schoolName}>{item.schoolName}</p>
+      ))}
+    </ul>
   );
 }
 
@@ -104,22 +137,11 @@ export default function App() {
     address: '?',
   });
 
-  const [education, setEducation] = useState({
-    schoolName: '?',
-    studyTitle: '?',
-    studyDates: '?',
-  });
+  // const [educations, setEducations] = useState(initialEducations);
 
   function handleContactChange(e, propertyName) {
     setContactDetails({
       ...contactDetails, // Create a copy of the original object
-      [propertyName]: e.target.value, // Update this specific property only
-    });
-  }
-
-  function handleEducationChange(e, propertyName) {
-    setEducation({
-      ...education, // Create a copy of the original object
       [propertyName]: e.target.value, // Update this specific property only
     });
   }
@@ -136,21 +158,28 @@ export default function App() {
           />
         </section>
         <section className='formSection education'>
-          <EducationForm
+          <EducationList educations={initialEducations} />
+
+          {/* <EducationForm
             schoolChange={(e) => handleEducationChange(e, 'schoolName')}
             titleChange={(e) => handleEducationChange(e, 'studyTitle')}
             dateChange={(e) => handleEducationChange(e, 'studyDates')}
-          />
-          <button>+</button>
+          /> */}
         </section>
       </div>
-      <Cv contacts={contactDetails} education={education} />
+      <Cv contacts={contactDetails} educations={initialEducations} />
     </main>
   );
 }
 
-// Initial array with one object with question marks
-// CvEducation just renders what's in the array currently
-// + button opens form
-// save button adds to array, and displays array to the left
-// edit button repopens form for that particular object, with prev filled values
+// JUST GET FUNCTIONALITY FROM PROJECT TASK, THEN FIX THE REST
+// ---
+// ---
+// ---
+// ---
+// Add button to display form
+// Make sure submitting/saving renders in both areas correctly
+// also make sure submitting/saving hides the form
+// Add edit button to display form, make sure changes happen in both places,
+// at least when you hit save, and hide form
+// Add delete button with delete functionality
