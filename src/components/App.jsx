@@ -56,30 +56,43 @@ function ContactForm({
   );
 }
 
-// function EducationForm({ schoolChange, titleChange, dateChange }) {
-//   return (
-//     <form className='form'>
-//       <input
-//         id='schoolName'
-//         type='text'
-//         placeholder='School name:'
-//         onChange={schoolChange}
-//       />
-//       <input
-//         id='studyTitle'
-//         type='text'
-//         placeholder='Title of study:'
-//         onChange={titleChange}
-//       />
-//       <input
-//         id='studyDates'
-//         type='text'
-//         placeholder='Date of study:'
-//         onChange={dateChange}
-//       />
-//     </form>
-//   );
-// }
+function EducationForm({
+  schoolValue,
+  titleValue,
+  dateValue,
+  submitCallback,
+  changeCallback,
+}) {
+  return (
+    <form className='form' onSubmit={submitCallback}>
+      <input
+        id='schoolName'
+        name='schoolName'
+        type='text'
+        placeholder='School name:'
+        value={schoolValue}
+        onChange={changeCallback}
+      />
+      <input
+        id='studyTitle'
+        name='studyTitle'
+        type='text'
+        placeholder='Title of study:'
+        value={titleValue}
+        onChange={changeCallback}
+      />
+      <input
+        id='studyDates'
+        name='studyDates'
+        type='text'
+        placeholder='Date of study:'
+        value={dateValue}
+        onChange={changeCallback}
+      />
+      <button type='submit'>Save</button>
+    </form>
+  );
+}
 
 function Cv({ contacts, educations }) {
   return (
@@ -123,13 +136,18 @@ function EducationList({ educations }) {
     <ul className='list'>
       <h4>EDUCATION</h4>
       {educations.map((item) => (
-        <p key={item.schoolName}>{item.schoolName}</p>
+        <div key={item.schoolName} className='listItems'>
+          <p>{item.schoolName}</p>
+          <button>Edit</button>
+          <button>Delete</button>
+        </div>
       ))}
     </ul>
   );
 }
 
 export default function App() {
+  // ============================= STATE ==============================
   const [contactDetails, setContactDetails] = useState({
     fullName: '?',
     email: '?',
@@ -137,12 +155,46 @@ export default function App() {
     address: '?',
   });
 
-  // const [educations, setEducations] = useState(initialEducations);
+  const [educations, setEducations] = useState(initialEducations);
 
+  const [educationFormData, setEducationFormData] = useState({
+    schoolName: '',
+    studyTitle: '',
+    studyDates: '',
+  });
+
+  // ========================== HANDLERS ==============================
   function handleContactChange(e, propertyName) {
     setContactDetails({
       ...contactDetails, // Create a copy of the original object
       [propertyName]: e.target.value, // Update this specific property only
+    });
+  }
+
+  function handleEducationChange(e) {
+    const { name, value } = e.target; // Get name and value from each input
+    setEducationFormData({
+      ...educationFormData, // Copy initial educationFormData
+      [name]: value, // Set a property in the new object with the name (key)
+      // provided by 'name' and assign it the 'value' from the input element.
+    });
+  }
+
+  function handleEducationSubmit(e) {
+    e.preventDefault();
+
+    const newEducation = {
+      // Create a new object with the form data
+      schoolName: educationFormData.schoolName,
+      studyTitle: educationFormData.studyTitle,
+      studyDates: educationFormData.studyDates,
+    };
+    setEducations([...educations, newEducation]); // Add to educations array
+    setEducationFormData({
+      // Clear input fields
+      schoolName: '',
+      studyTitle: '',
+      studyDates: '',
     });
   }
 
@@ -158,16 +210,18 @@ export default function App() {
           />
         </section>
         <section className='formSection education'>
-          <EducationList educations={initialEducations} />
+          <EducationList educations={educations} />
 
-          {/* <EducationForm
-            schoolChange={(e) => handleEducationChange(e, 'schoolName')}
-            titleChange={(e) => handleEducationChange(e, 'studyTitle')}
-            dateChange={(e) => handleEducationChange(e, 'studyDates')}
-          /> */}
+          <EducationForm
+            schoolValue={educationFormData.schoolName}
+            titleValue={educationFormData.studyTitle}
+            dateValue={educationFormData.studyDates}
+            submitCallback={handleEducationSubmit}
+            changeCallback={handleEducationChange}
+          />
         </section>
       </div>
-      <Cv contacts={contactDetails} educations={initialEducations} />
+      <Cv contacts={contactDetails} educations={educations} />
     </main>
   );
 }
@@ -177,9 +231,10 @@ export default function App() {
 // ---
 // ---
 // ---
-// Add button to display form
-// Make sure submitting/saving renders in both areas correctly
-// also make sure submitting/saving hides the form
-// Add edit button to display form, make sure changes happen in both places,
-// at least when you hit save, and hide form
-// Add delete button with delete functionality
+// ---
+// ---
+// ---
+// Add edit and delete button to each object in array
+// Get delete functionality to work
+// Get edit functionality to work (should fill form, or open new form, with
+// current data)

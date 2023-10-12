@@ -37,14 +37,27 @@ main {
 .form {
    display: flex;
    flex-direction: column; 
+   border: 2px solid #0000ff;
+   padding: 5px;
 }
 
 .list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
     border: 2px solid #ffa500;
     padding: 10px;
- }
+}
+
+.listItems {
+    display: flex;
+    gap: 10px;
+}
 
 .formSection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     border: 2px solid #008000;
     padding: 10px;
 }
