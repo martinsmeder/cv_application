@@ -49,7 +49,7 @@ main {
     padding: 10px;
 }
 
-.listItems {
+.listItem {
     display: flex;
     gap: 10px;
 }

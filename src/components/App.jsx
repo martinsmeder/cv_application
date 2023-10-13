@@ -131,20 +131,20 @@ function CvEducation({ educations }) {
   );
 }
 
-function EducationList({ educations }) {
-  return (
-    <ul className='list'>
-      <h4>EDUCATION</h4>
-      {educations.map((item) => (
-        <div key={item.schoolName} className='listItems'>
-          <p>{item.schoolName}</p>
-          <button>Edit</button>
-          <button>Delete</button>
-        </div>
-      ))}
-    </ul>
-  );
-}
+// function EducationList({ educations, handleDelete }) {
+//   return (
+//     <ul className='list'>
+//       <h4>EDUCATION</h4>
+//       {educations.map((education) => (
+//         <div key={education.schoolName} className='listItems'>
+//           <p>{education.schoolName}</p>
+//           <button>Edit</button>
+//           <button onClick={handleDelete}>Delete</button>
+//         </div>
+//       ))}
+//     </ul>
+//   );
+// }
 
 export default function App() {
   // ============================= STATE ==============================
@@ -163,6 +163,10 @@ export default function App() {
     studyDates: '',
   });
 
+  const [isEditing, setIsEditing] = useState(false);
+
+  const [currentIndex, setCurrentIndex] = useState(null);
+
   // ========================== HANDLERS ==============================
   function handleContactChange(e, propertyName) {
     setContactDetails({
@@ -180,22 +184,39 @@ export default function App() {
     });
   }
 
-  function handleEducationSubmit(e) {
-    e.preventDefault();
-
-    const newEducation = {
-      // Create a new object with the form data
-      schoolName: educationFormData.schoolName,
-      studyTitle: educationFormData.studyTitle,
-      studyDates: educationFormData.studyDates,
-    };
-    setEducations([...educations, newEducation]); // Add to educations array
-    setEducationFormData({
-      // Clear input fields
-      schoolName: '',
-      studyTitle: '',
-      studyDates: '',
-    });
+  function handleEducationSubmit(e, isEditing) {
+    if (!isEditing) {
+      e.preventDefault();
+      const newEducation = {
+        // Create a new object with the form data
+        schoolName: educationFormData.schoolName,
+        studyTitle: educationFormData.studyTitle,
+        studyDates: educationFormData.studyDates,
+      };
+      setEducations([...educations, newEducation]); // Add to educations array
+      setEducationFormData({
+        // Clear input fields
+        schoolName: '',
+        studyTitle: '',
+        studyDates: '',
+      });
+    } else {
+      e.preventDefault();
+      // Create copy from original array
+      const newEducationsArray = [...educations];
+      // Replace old item with new item at old item index
+      newEducationsArray[currentIndex] = educationFormData;
+      // Update educations state
+      setEducations(newEducationsArray);
+      setEducationFormData({
+        // Clear input fields
+        schoolName: '',
+        studyTitle: '',
+        studyDates: '',
+      });
+      // Reset isEditing state
+      setIsEditing(false);
+    }
   }
 
   return (
@@ -210,31 +231,51 @@ export default function App() {
           />
         </section>
         <section className='formSection education'>
-          <EducationList educations={educations} />
+          <ul className='list'>
+            <h4>EDUCATION</h4>
+            {educations.map((education, index) => (
+              <div key={education.schoolName} className='listItem'>
+                <p>{education.schoolName}</p>
+                <button
+                  onClick={() => {
+                    setEducationFormData({
+                      schoolName: education.schoolName,
+                      studyTitle: education.studyTitle,
+                      studyDates: education.studyDates,
+                    });
+                    setIsEditing(true);
+                    setCurrentIndex(index);
+                  }}
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => {
+                    setEducations(
+                      educations.filter(
+                        // Filter out (remove) selected item
+                        (item) => item.schoolName !== education.schoolName
+                      )
+                    );
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
+          </ul>
 
           <EducationForm
             schoolValue={educationFormData.schoolName}
             titleValue={educationFormData.studyTitle}
             dateValue={educationFormData.studyDates}
-            submitCallback={handleEducationSubmit}
+            submitCallback={(e) => handleEducationSubmit(e, isEditing)}
             changeCallback={handleEducationChange}
           />
         </section>
       </div>
+
       <Cv contacts={contactDetails} educations={educations} />
     </main>
   );
 }
-
-// JUST GET FUNCTIONALITY FROM PROJECT TASK, THEN FIX THE REST
-// ---
-// ---
-// ---
-// ---
-// ---
-// ---
-// ---
-// Add edit and delete button to each object in array
-// Get delete functionality to work
-// Get edit functionality to work (should fill form, or open new form, with
-// current data)
