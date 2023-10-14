@@ -9,13 +9,19 @@
 1. ---
 2. ---
 3. ---
-4. Get changes in form to be displayed in cv immediately
-5. Implement button to add new education (open form button)
-6. Add education form 
-7. Implement logic to save education  (push to array)
-8. Implement logic to remove education  (remove from array)
-9. Implement logic to edit education  (edit object)
-10. Get changes in education form to be displayed in cv 
-11. Repeat steps 5-10 for practical experience 
+4. ---
+5. ---
+6. ---
+7. ---
+8. ---
+9. ---
+10. ---
+11. ---
+12. --- 
+13. ---
+14. Move components to different files and import to App 
+15. Add buttons to show/hide form when editing or adding new stuff 
+16. Make editing and adding new data happen in real time if easy, else skip
+17. Style and finish project
 
 State needs to be added to App, so that forms and cv components can share 

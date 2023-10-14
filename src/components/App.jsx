@@ -20,6 +20,29 @@ const initialEducations = [
   },
 ];
 
+const initialExperiences = [
+  {
+    companyName: '?',
+    positionTitle: '?',
+    responsibilities: '?',
+    employmentDates: '?',
+  },
+
+  {
+    companyName: '??',
+    positionTitle: '??',
+    responsibilities: '??',
+    employmentDates: '??',
+  },
+
+  {
+    companyName: '???',
+    positionTitle: '???',
+    responsibilities: '???',
+    employmentDates: '???',
+  },
+];
+
 function ContactForm({
   fullNameChange,
   emailChange,
@@ -94,11 +117,58 @@ function EducationForm({
   );
 }
 
-function Cv({ contacts, educations }) {
+function ExperienceForm({
+  companyValue,
+  positionValue,
+  responsibilitiesValue,
+  dateValue,
+  submitCallback,
+  changeCallback,
+}) {
+  return (
+    <form className='form' onSubmit={submitCallback}>
+      <input
+        id='companyName'
+        name='companyName'
+        type='text'
+        placeholder='Company name:'
+        value={companyValue}
+        onChange={changeCallback}
+      />
+      <input
+        id='positionTitle'
+        name='positionTitle'
+        type='text'
+        placeholder='Position title:'
+        value={positionValue}
+        onChange={changeCallback}
+      />
+      <textarea
+        id='responsibilities'
+        name='responsibilities'
+        placeholder='Main responsibilities:'
+        value={responsibilitiesValue}
+        onChange={changeCallback}
+      />
+      <input
+        id='employmentDates'
+        name='employmentDates'
+        type='text'
+        placeholder='Date of employment:'
+        value={dateValue}
+        onChange={changeCallback}
+      />
+      <button type='submit'>Save</button>
+    </form>
+  );
+}
+
+function Cv({ contacts, educations, experiences }) {
   return (
     <div id='cvContainer'>
       <CvContacts contacts={contacts} />
       <CvEducation educations={educations} />
+      <CvExperience experiences={experiences} />
     </div>
   );
 }
@@ -131,20 +201,51 @@ function CvEducation({ educations }) {
   );
 }
 
-// function EducationList({ educations, handleDelete }) {
-//   return (
-//     <ul className='list'>
-//       <h4>EDUCATION</h4>
-//       {educations.map((education) => (
-//         <div key={education.schoolName} className='listItems'>
-//           <p>{education.schoolName}</p>
-//           <button>Edit</button>
-//           <button onClick={handleDelete}>Delete</button>
-//         </div>
-//       ))}
-//     </ul>
-//   );
-// }
+function CvExperience({ experiences }) {
+  return (
+    <section className='cvSection experience'>
+      <h1>EXPERIENCES</h1>
+      {experiences.map((item) => (
+        <div key={item.companyName}>
+          <p>{item.companyName}</p>
+          <p>{item.positionTitle}</p>
+          <p>{item.responsibilities}</p>
+          <p>{item.employmentDates}</p>
+        </div>
+      ))}
+    </section>
+  );
+}
+
+function EducationList({ educations, editCallback, deleteCallback }) {
+  return (
+    <ul className='list'>
+      <h4>EDUCATION</h4>
+      {educations.map((education, index) => (
+        <div key={education.schoolName} className='listItem'>
+          <p>{education.schoolName}</p>
+          <button onClick={() => editCallback(education, index)}>Edit</button>
+          <button onClick={() => deleteCallback(education)}>Delete</button>
+        </div>
+      ))}
+    </ul>
+  );
+}
+
+function ExperienceList({ experiences, editCallback, deleteCallback }) {
+  return (
+    <ul className='list'>
+      <h4>EXPERIENCE</h4>
+      {experiences.map((experience, index) => (
+        <div key={experience.companyName} className='listItem'>
+          <p>{experience.companyName}</p>
+          <button onClick={() => editCallback(experience, index)}>Edit</button>
+          <button onClick={() => deleteCallback(experience)}>Delete</button>
+        </div>
+      ))}
+    </ul>
+  );
+}
 
 export default function App() {
   // ============================= STATE ==============================
@@ -163,6 +264,15 @@ export default function App() {
     studyDates: '',
   });
 
+  const [experiences, setExperiences] = useState(initialExperiences);
+
+  const [experienceFormData, setExperienceFormData] = useState({
+    companyName: '',
+    positionTitle: '',
+    responsibilities: '',
+    employmentDates: '',
+  });
+
   const [isEditing, setIsEditing] = useState(false);
 
   const [currentIndex, setCurrentIndex] = useState(null);
@@ -175,48 +285,70 @@ export default function App() {
     });
   }
 
-  function handleEducationChange(e) {
+  function handleChange(e, setFormData, stateVariable) {
     const { name, value } = e.target; // Get name and value from each input
-    setEducationFormData({
-      ...educationFormData, // Copy initial educationFormData
+    setFormData({
+      ...stateVariable, // Copy initial formData
       [name]: value, // Set a property in the new object with the name (key)
       // provided by 'name' and assign it the 'value' from the input element.
     });
   }
 
-  function handleEducationSubmit(e, isEditing) {
+  function handleSubmit(
+    e,
+    isEditing,
+    formData,
+    setFormData,
+    stateVariable,
+    setStateVariable,
+    currentIndex,
+    resetCallback
+  ) {
+    e.preventDefault();
     if (!isEditing) {
-      e.preventDefault();
-      const newEducation = {
-        // Create a new object with the form data
-        schoolName: educationFormData.schoolName,
-        studyTitle: educationFormData.studyTitle,
-        studyDates: educationFormData.studyDates,
-      };
-      setEducations([...educations, newEducation]); // Add to educations array
-      setEducationFormData({
-        // Clear input fields
-        schoolName: '',
-        studyTitle: '',
-        studyDates: '',
-      });
+      const newItem = { ...formData }; // Create a new object with form data
+      setStateVariable([...stateVariable, newItem]); // Add to array
+      setFormData(resetCallback); // Reset form
     } else {
-      e.preventDefault();
-      // Create copy from original array
-      const newEducationsArray = [...educations];
-      // Replace old item with new item at old item index
-      newEducationsArray[currentIndex] = educationFormData;
-      // Update educations state
-      setEducations(newEducationsArray);
-      setEducationFormData({
-        // Clear input fields
-        schoolName: '',
-        studyTitle: '',
-        studyDates: '',
-      });
-      // Reset isEditing state
-      setIsEditing(false);
+      const newStateArray = [...stateVariable]; // Copy original array
+      newStateArray[currentIndex] = formData; // Replace at old item index
+      setStateVariable(newStateArray); // Update state with edited object
+      setFormData(resetCallback); // Reset form
+      setIsEditing(false); // Reset isEditing flag
     }
+  }
+
+  function handleEducationEditClick(education, index) {
+    setEducationFormData({
+      schoolName: education.schoolName,
+      studyTitle: education.studyTitle,
+      studyDates: education.studyDates,
+    });
+    setIsEditing(true);
+    setCurrentIndex(index);
+  }
+
+  function handleExperienceEditClick(experience, index) {
+    setExperienceFormData({
+      companyName: experience.companyName,
+      positionTitle: experience.positionTitle,
+      responsibilities: experience.responsibilities,
+      employmentDates: experience.employmentDates,
+    });
+    setIsEditing(true);
+    setCurrentIndex(index);
+  }
+
+  function handleEducationDeleteClick(education) {
+    setEducations(
+      educations.filter((item) => item.schoolName !== education.schoolName)
+    );
+  }
+
+  function handleExperienceDeleteClick(experience) {
+    setExperiences(
+      experiences.filter((item) => item.companyName !== experience.companyName)
+    );
   }
 
   return (
@@ -230,52 +362,81 @@ export default function App() {
             addressChange={(e) => handleContactChange(e, 'address')}
           />
         </section>
+
         <section className='formSection education'>
-          <ul className='list'>
-            <h4>EDUCATION</h4>
-            {educations.map((education, index) => (
-              <div key={education.schoolName} className='listItem'>
-                <p>{education.schoolName}</p>
-                <button
-                  onClick={() => {
-                    setEducationFormData({
-                      schoolName: education.schoolName,
-                      studyTitle: education.studyTitle,
-                      studyDates: education.studyDates,
-                    });
-                    setIsEditing(true);
-                    setCurrentIndex(index);
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => {
-                    setEducations(
-                      educations.filter(
-                        // Filter out (remove) selected item
-                        (item) => item.schoolName !== education.schoolName
-                      )
-                    );
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
-            ))}
-          </ul>
+          <EducationList
+            educations={educations}
+            editCallback={handleEducationEditClick}
+            deleteCallback={handleEducationDeleteClick}
+          />
 
           <EducationForm
             schoolValue={educationFormData.schoolName}
             titleValue={educationFormData.studyTitle}
             dateValue={educationFormData.studyDates}
-            submitCallback={(e) => handleEducationSubmit(e, isEditing)}
-            changeCallback={handleEducationChange}
+            submitCallback={(e) =>
+              handleSubmit(
+                e,
+                isEditing,
+                educationFormData,
+                setEducationFormData,
+                educations,
+                setEducations,
+                currentIndex,
+                {
+                  schoolName: '',
+                  studyTitle: '',
+                  studyDates: '',
+                }
+              )
+            }
+            changeCallback={(e) =>
+              handleChange(e, setEducationFormData, educationFormData)
+            }
+          />
+        </section>
+
+        <section className='formSection experience'>
+          <ExperienceList
+            experiences={experiences}
+            editCallback={handleExperienceEditClick}
+            deleteCallback={handleExperienceDeleteClick}
+          />
+
+          <ExperienceForm
+            companyValue={experienceFormData.companyName}
+            positionValue={experienceFormData.positionTitle}
+            responsibilitiesValue={experienceFormData.responsibilities}
+            dateValue={experienceFormData.employmentDates}
+            submitCallback={(e) =>
+              handleSubmit(
+                e,
+                isEditing,
+                experienceFormData,
+                setExperienceFormData,
+                experiences,
+                setExperiences,
+                currentIndex,
+                {
+                  companyName: '',
+                  positionTitle: '',
+                  responsibilities: '',
+                  employmentDates: '',
+                }
+              )
+            }
+            changeCallback={(e) =>
+              handleChange(e, setExperienceFormData, experienceFormData)
+            }
           />
         </section>
       </div>
 
-      <Cv contacts={contactDetails} educations={educations} />
+      <Cv
+        contacts={contactDetails}
+        educations={educations}
+        experiences={experiences}
+      />
     </main>
   );
 }
