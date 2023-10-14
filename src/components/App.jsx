@@ -1,251 +1,9 @@
 import { useState } from 'react';
 
-const initialEducations = [
-  {
-    schoolName: '?',
-    studyTitle: '?',
-    studyDates: '?',
-  },
-
-  {
-    schoolName: '??',
-    studyTitle: '??',
-    studyDates: '??',
-  },
-
-  {
-    schoolName: '???',
-    studyTitle: '???',
-    studyDates: '???',
-  },
-];
-
-const initialExperiences = [
-  {
-    companyName: '?',
-    positionTitle: '?',
-    responsibilities: '?',
-    employmentDates: '?',
-  },
-
-  {
-    companyName: '??',
-    positionTitle: '??',
-    responsibilities: '??',
-    employmentDates: '??',
-  },
-
-  {
-    companyName: '???',
-    positionTitle: '???',
-    responsibilities: '???',
-    employmentDates: '???',
-  },
-];
-
-function ContactForm({
-  fullNameChange,
-  emailChange,
-  phoneChange,
-  addressChange,
-}) {
-  return (
-    <form className='form'>
-      <input
-        id='fullName'
-        type='text'
-        placeholder='Full name:'
-        onChange={fullNameChange}
-      />
-      <input
-        id='email'
-        type='text'
-        placeholder='Email:'
-        onChange={emailChange}
-      />
-      <input
-        id='phone'
-        type='text'
-        placeholder='Phone:'
-        onChange={phoneChange}
-      />
-      <input
-        id='adress'
-        type='text'
-        placeholder='Adress:'
-        onChange={addressChange}
-      />
-    </form>
-  );
-}
-
-function EducationForm({
-  schoolValue,
-  titleValue,
-  dateValue,
-  submitCallback,
-  changeCallback,
-}) {
-  return (
-    <form className='form' onSubmit={submitCallback}>
-      <input
-        id='schoolName'
-        name='schoolName'
-        type='text'
-        placeholder='School name:'
-        value={schoolValue}
-        onChange={changeCallback}
-      />
-      <input
-        id='studyTitle'
-        name='studyTitle'
-        type='text'
-        placeholder='Title of study:'
-        value={titleValue}
-        onChange={changeCallback}
-      />
-      <input
-        id='studyDates'
-        name='studyDates'
-        type='text'
-        placeholder='Date of study:'
-        value={dateValue}
-        onChange={changeCallback}
-      />
-      <button type='submit'>Save</button>
-    </form>
-  );
-}
-
-function ExperienceForm({
-  companyValue,
-  positionValue,
-  responsibilitiesValue,
-  dateValue,
-  submitCallback,
-  changeCallback,
-}) {
-  return (
-    <form className='form' onSubmit={submitCallback}>
-      <input
-        id='companyName'
-        name='companyName'
-        type='text'
-        placeholder='Company name:'
-        value={companyValue}
-        onChange={changeCallback}
-      />
-      <input
-        id='positionTitle'
-        name='positionTitle'
-        type='text'
-        placeholder='Position title:'
-        value={positionValue}
-        onChange={changeCallback}
-      />
-      <textarea
-        id='responsibilities'
-        name='responsibilities'
-        placeholder='Main responsibilities:'
-        value={responsibilitiesValue}
-        onChange={changeCallback}
-      />
-      <input
-        id='employmentDates'
-        name='employmentDates'
-        type='text'
-        placeholder='Date of employment:'
-        value={dateValue}
-        onChange={changeCallback}
-      />
-      <button type='submit'>Save</button>
-    </form>
-  );
-}
-
-function Cv({ contacts, educations, experiences }) {
-  return (
-    <div id='cvContainer'>
-      <CvContacts contacts={contacts} />
-      <CvEducation educations={educations} />
-      <CvExperience experiences={experiences} />
-    </div>
-  );
-}
-
-function CvContacts({ contacts }) {
-  return (
-    <section className='cvSection contacts'>
-      <h1>{contacts.fullName}</h1>
-      <div>
-        <p>{contacts.email}</p>
-        <p>{contacts.phone}</p>
-        <p>{contacts.address}</p>
-      </div>
-    </section>
-  );
-}
-
-function CvEducation({ educations }) {
-  return (
-    <section className='cvSection education'>
-      <h1>EDUCATION</h1>
-      {educations.map((item) => (
-        <div key={item.schoolName}>
-          <p>{item.schoolName}</p>
-          <p>{item.studyTitle}</p>
-          <p>{item.studyDates}</p>
-        </div>
-      ))}
-    </section>
-  );
-}
-
-function CvExperience({ experiences }) {
-  return (
-    <section className='cvSection experience'>
-      <h1>EXPERIENCES</h1>
-      {experiences.map((item) => (
-        <div key={item.companyName}>
-          <p>{item.companyName}</p>
-          <p>{item.positionTitle}</p>
-          <p>{item.responsibilities}</p>
-          <p>{item.employmentDates}</p>
-        </div>
-      ))}
-    </section>
-  );
-}
-
-function EducationList({ educations, editCallback, deleteCallback }) {
-  return (
-    <ul className='list'>
-      <h4>EDUCATION</h4>
-      {educations.map((education, index) => (
-        <div key={education.schoolName} className='listItem'>
-          <p>{education.schoolName}</p>
-          <button onClick={() => editCallback(education, index)}>Edit</button>
-          <button onClick={() => deleteCallback(education)}>Delete</button>
-        </div>
-      ))}
-    </ul>
-  );
-}
-
-function ExperienceList({ experiences, editCallback, deleteCallback }) {
-  return (
-    <ul className='list'>
-      <h4>EXPERIENCE</h4>
-      {experiences.map((experience, index) => (
-        <div key={experience.companyName} className='listItem'>
-          <p>{experience.companyName}</p>
-          <button onClick={() => editCallback(experience, index)}>Edit</button>
-          <button onClick={() => deleteCallback(experience)}>Delete</button>
-        </div>
-      ))}
-    </ul>
-  );
-}
+import Cv from './Cv';
+import { ContactForm, EducationForm, ExperienceForm } from './Forms';
+import { EducationList, ExperienceList } from './Lists';
+import { initialEducations, initialExperiences } from './initialData';
 
 export default function App() {
   // ============================= STATE ==============================
@@ -276,6 +34,8 @@ export default function App() {
   const [isEditing, setIsEditing] = useState(false);
 
   const [currentIndex, setCurrentIndex] = useState(null);
+
+  const [showForm, setShowForm] = useState(false);
 
   // ========================== HANDLERS ==============================
   function handleContactChange(e, propertyName) {
@@ -309,12 +69,14 @@ export default function App() {
       const newItem = { ...formData }; // Create a new object with form data
       setStateVariable([...stateVariable, newItem]); // Add to array
       setFormData(resetCallback); // Reset form
+      setShowForm(false); // Close form
     } else {
       const newStateArray = [...stateVariable]; // Copy original array
       newStateArray[currentIndex] = formData; // Replace at old item index
       setStateVariable(newStateArray); // Update state with edited object
       setFormData(resetCallback); // Reset form
       setIsEditing(false); // Reset isEditing flag
+      setShowForm(false); // Close form
     }
   }
 
@@ -326,6 +88,7 @@ export default function App() {
     });
     setIsEditing(true);
     setCurrentIndex(index);
+    setShowForm(true);
   }
 
   function handleExperienceEditClick(experience, index) {
@@ -337,6 +100,7 @@ export default function App() {
     });
     setIsEditing(true);
     setCurrentIndex(index);
+    setShowForm(true);
   }
 
   function handleEducationDeleteClick(education) {
@@ -351,10 +115,16 @@ export default function App() {
     );
   }
 
+  function handleAddNewClick(setStateVariable, stateVariable) {
+    setStateVariable(stateVariable);
+    setShowForm(true);
+  }
+
   return (
     <main>
       <div id='formContainer'>
         <section className='formSection contacts'>
+          <h3>Contact details</h3>
           <ContactForm
             fullNameChange={(e) => handleContactChange(e, 'fullName')}
             emailChange={(e) => handleContactChange(e, 'email')}
@@ -364,13 +134,20 @@ export default function App() {
         </section>
 
         <section className='formSection education'>
-          <EducationList
-            educations={educations}
-            editCallback={handleEducationEditClick}
-            deleteCallback={handleEducationDeleteClick}
-          />
-
+          <h3>Education</h3>
+          <button
+            onClick={() =>
+              handleAddNewClick(setEducationFormData, {
+                schoolName: '',
+                studyTitle: '',
+                studyDates: '',
+              })
+            }
+          >
+            Add new
+          </button>
           <EducationForm
+            showForm={showForm}
             schoolValue={educationFormData.schoolName}
             titleValue={educationFormData.studyTitle}
             dateValue={educationFormData.studyDates}
@@ -393,17 +170,31 @@ export default function App() {
             changeCallback={(e) =>
               handleChange(e, setEducationFormData, educationFormData)
             }
+            cancelCallback={() => setShowForm(false)}
+          />
+          <EducationList
+            educations={educations}
+            editCallback={handleEducationEditClick}
+            deleteCallback={handleEducationDeleteClick}
           />
         </section>
 
         <section className='formSection experience'>
-          <ExperienceList
-            experiences={experiences}
-            editCallback={handleExperienceEditClick}
-            deleteCallback={handleExperienceDeleteClick}
-          />
-
+          <h3>Experience</h3>
+          <button
+            onClick={() =>
+              handleAddNewClick(setExperienceFormData, {
+                companyName: '',
+                positionTitle: '',
+                responsibilities: '',
+                employmentDates: '',
+              })
+            }
+          >
+            Add new
+          </button>
           <ExperienceForm
+            showForm={showForm}
             companyValue={experienceFormData.companyName}
             positionValue={experienceFormData.positionTitle}
             responsibilitiesValue={experienceFormData.responsibilities}
@@ -428,6 +219,12 @@ export default function App() {
             changeCallback={(e) =>
               handleChange(e, setExperienceFormData, experienceFormData)
             }
+            cancelCallback={() => setShowForm(false)}
+          />
+          <ExperienceList
+            experiences={experiences}
+            editCallback={handleExperienceEditClick}
+            deleteCallback={handleExperienceDeleteClick}
           />
         </section>
       </div>
@@ -440,3 +237,9 @@ export default function App() {
     </main>
   );
 }
+
+// showForm state
+// add showForm prop to form with inline CSS
+// add new click --> showForm true
+// save click --> showForm false
+// edit click --> showForm true
