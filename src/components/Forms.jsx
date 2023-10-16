@@ -1,4 +1,8 @@
 export function ContactForm({
+  fullNameValue,
+  emailValue,
+  phoneValue,
+  addressValue,
   fullNameChange,
   emailChange,
   phoneChange,
@@ -8,26 +12,34 @@ export function ContactForm({
     <form className='form'>
       <input
         id='fullName'
+        name='fullName'
         type='text'
         placeholder='Full name:'
+        value={fullNameValue}
         onChange={fullNameChange}
       />
       <input
         id='email'
+        name='email'
         type='text'
         placeholder='Email:'
+        value={emailValue}
         onChange={emailChange}
       />
       <input
         id='phone'
+        name='phone'
         type='text'
         placeholder='Phone:'
+        value={phoneValue}
         onChange={phoneChange}
       />
       <input
         id='adress'
+        name='adress'
         type='text'
         placeholder='Adress:'
+        value={addressValue}
         onChange={addressChange}
       />
     </form>
@@ -73,10 +85,12 @@ export function EducationForm({
         value={dateValue}
         onChange={changeCallback}
       />
-      <button type='submit'>Save</button>
-      <button type='button' onClick={cancelCallback}>
-        Cancel
-      </button>
+      <div className='buttons formBtn'>
+        <button type='submit'>Save</button>
+        <button type='button' onClick={cancelCallback}>
+          Cancel
+        </button>
+      </div>
     </form>
   );
 }
@@ -128,10 +142,12 @@ export function ExperienceForm({
         value={dateValue}
         onChange={changeCallback}
       />
-      <button type='submit'>Save</button>
-      <button type='button' onClick={cancelCallback}>
-        Cancel
-      </button>
+      <div className='buttons formBtn'>
+        <button type='submit'>Save</button>
+        <button type='button' onClick={cancelCallback}>
+          Cancel
+        </button>
+      </div>
     </form>
   );
 }

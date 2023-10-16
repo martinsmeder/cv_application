@@ -19,9 +19,11 @@
 11. ---
 12. --- 
 13. ---
-14. Move components to different files and import to App 
-15. Add buttons to show/hide form when editing or adding new stuff 
-16. Make editing and adding new data happen in real time if easy, else skip
-17. Style and finish project
+14. ---
+15. ---
+16. ---
+17. ---
+18. Refactor code and remove as much code duplication as possible
+19. Style and finish project
 
 State needs to be added to App, so that forms and cv components can share 

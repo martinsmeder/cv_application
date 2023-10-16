@@ -1,4 +1,4 @@
-function CvContacts({ contacts }) {
+export function CvContacts({ contacts }) {
   return (
     <section className='cvSection contacts'>
       <h1>{contacts.fullName}</h1>
@@ -11,7 +11,7 @@ function CvContacts({ contacts }) {
   );
 }
 
-function CvEducation({ educations }) {
+export function CvEducation({ educations }) {
   return (
     <section className='cvSection education'>
       <h1>EDUCATION</h1>
@@ -26,7 +26,7 @@ function CvEducation({ educations }) {
   );
 }
 
-function CvExperience({ experiences }) {
+export function CvExperience({ experiences }) {
   return (
     <section className='cvSection experience'>
       <h1>EXPERIENCES</h1>
@@ -39,15 +39,5 @@ function CvExperience({ experiences }) {
         </div>
       ))}
     </section>
-  );
-}
-
-export default function Cv({ contacts, educations, experiences }) {
-  return (
-    <div id='cvContainer'>
-      <CvContacts contacts={contacts} />
-      <CvEducation educations={educations} />
-      <CvExperience experiences={experiences} />
-    </div>
   );
 }

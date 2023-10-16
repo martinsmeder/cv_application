@@ -1,18 +1,17 @@
 import { useState } from 'react';
 
-import Cv from './Cv';
+import { CvContacts, CvEducation, CvExperience } from './Cv';
 import { ContactForm, EducationForm, ExperienceForm } from './Forms';
 import { EducationList, ExperienceList } from './Lists';
-import { initialEducations, initialExperiences } from './initialData';
+import {
+  initialContacts,
+  initialEducations,
+  initialExperiences,
+} from './initialData';
 
 export default function App() {
   // ============================= STATE ==============================
-  const [contactDetails, setContactDetails] = useState({
-    fullName: '?',
-    email: '?',
-    phone: '?',
-    address: '?',
-  });
+  const [contactDetails, setContactDetails] = useState(initialContacts);
 
   const [educations, setEducations] = useState(initialEducations);
 
@@ -31,11 +30,13 @@ export default function App() {
     employmentDates: '',
   });
 
+  const [showEducationForm, setShowEducationForm] = useState(false);
+
+  const [showExperienceForm, setShowExperienceForm] = useState(false);
+
   const [isEditing, setIsEditing] = useState(false);
 
   const [currentIndex, setCurrentIndex] = useState(null);
-
-  const [showForm, setShowForm] = useState(false);
 
   // ========================== HANDLERS ==============================
   function handleContactChange(e, propertyName) {
@@ -69,14 +70,16 @@ export default function App() {
       const newItem = { ...formData }; // Create a new object with form data
       setStateVariable([...stateVariable, newItem]); // Add to array
       setFormData(resetCallback); // Reset form
-      setShowForm(false); // Close form
+      setShowEducationForm(false);
+      setShowExperienceForm(false);
     } else {
       const newStateArray = [...stateVariable]; // Copy original array
       newStateArray[currentIndex] = formData; // Replace at old item index
       setStateVariable(newStateArray); // Update state with edited object
       setFormData(resetCallback); // Reset form
       setIsEditing(false); // Reset isEditing flag
-      setShowForm(false); // Close form
+      setShowEducationForm(false);
+      setShowExperienceForm(false);
     }
   }
 
@@ -88,7 +91,7 @@ export default function App() {
     });
     setIsEditing(true);
     setCurrentIndex(index);
-    setShowForm(true);
+    setShowEducationForm(true);
   }
 
   function handleExperienceEditClick(experience, index) {
@@ -100,7 +103,7 @@ export default function App() {
     });
     setIsEditing(true);
     setCurrentIndex(index);
-    setShowForm(true);
+    setShowExperienceForm(true);
   }
 
   function handleEducationDeleteClick(education) {
@@ -115,17 +118,48 @@ export default function App() {
     );
   }
 
-  function handleAddNewClick(setStateVariable, stateVariable) {
+  function handleAddNewClick(
+    setStateVariable,
+    stateVariable,
+    setShowForm,
+    value
+  ) {
     setStateVariable(stateVariable);
-    setShowForm(true);
+    setShowForm(value);
+  }
+
+  function handleClearClick() {
+    setContactDetails({
+      fullName: '',
+      email: '',
+      phone: '',
+      address: '',
+    });
+    setEducations([]);
+    setExperiences([]);
+  }
+
+  function handleExampleClick() {
+    setContactDetails(initialContacts);
+    setEducations(initialEducations);
+    setExperiences(initialExperiences);
   }
 
   return (
     <main>
       <div id='formContainer'>
+        <div className='buttons example'>
+          <button onClick={handleClearClick}>Clear Resume</button>
+          <button onClick={handleExampleClick}>Load Example</button>
+        </div>
+
         <section className='formSection contacts'>
           <h3>Contact details</h3>
           <ContactForm
+            fullNameValue={contactDetails.fullName}
+            emailValue={contactDetails.email}
+            phoneValue={contactDetails.phone}
+            addressValue={contactDetails.address}
             fullNameChange={(e) => handleContactChange(e, 'fullName')}
             emailChange={(e) => handleContactChange(e, 'email')}
             phoneChange={(e) => handleContactChange(e, 'phone')}
@@ -137,17 +171,22 @@ export default function App() {
           <h3>Education</h3>
           <button
             onClick={() =>
-              handleAddNewClick(setEducationFormData, {
-                schoolName: '',
-                studyTitle: '',
-                studyDates: '',
-              })
+              handleAddNewClick(
+                setEducationFormData,
+                {
+                  schoolName: '',
+                  studyTitle: '',
+                  studyDates: '',
+                },
+                setShowEducationForm,
+                true
+              )
             }
           >
             Add new
           </button>
           <EducationForm
-            showForm={showForm}
+            showForm={showEducationForm}
             schoolValue={educationFormData.schoolName}
             titleValue={educationFormData.studyTitle}
             dateValue={educationFormData.studyDates}
@@ -170,7 +209,7 @@ export default function App() {
             changeCallback={(e) =>
               handleChange(e, setEducationFormData, educationFormData)
             }
-            cancelCallback={() => setShowForm(false)}
+            cancelCallback={() => setShowEducationForm(false)}
           />
           <EducationList
             educations={educations}
@@ -183,18 +222,23 @@ export default function App() {
           <h3>Experience</h3>
           <button
             onClick={() =>
-              handleAddNewClick(setExperienceFormData, {
-                companyName: '',
-                positionTitle: '',
-                responsibilities: '',
-                employmentDates: '',
-              })
+              handleAddNewClick(
+                setExperienceFormData,
+                {
+                  companyName: '',
+                  positionTitle: '',
+                  responsibilities: '',
+                  employmentDates: '',
+                },
+                setShowExperienceForm,
+                true
+              )
             }
           >
             Add new
           </button>
           <ExperienceForm
-            showForm={showForm}
+            showForm={showExperienceForm}
             companyValue={experienceFormData.companyName}
             positionValue={experienceFormData.positionTitle}
             responsibilitiesValue={experienceFormData.responsibilities}
@@ -219,7 +263,7 @@ export default function App() {
             changeCallback={(e) =>
               handleChange(e, setExperienceFormData, experienceFormData)
             }
-            cancelCallback={() => setShowForm(false)}
+            cancelCallback={() => setShowExperienceForm(false)}
           />
           <ExperienceList
             experiences={experiences}
@@ -229,17 +273,11 @@ export default function App() {
         </section>
       </div>
 
-      <Cv
-        contacts={contactDetails}
-        educations={educations}
-        experiences={experiences}
-      />
+      <div id='cvContainer'>
+        <CvContacts contacts={contactDetails} />
+        <CvEducation educations={educations} />
+        <CvExperience experiences={experiences} />
+      </div>
     </main>
   );
 }
-
-// showForm state
-// add showForm prop to form with inline CSS
-// add new click --> showForm true
-// save click --> showForm false
-// edit click --> showForm true
