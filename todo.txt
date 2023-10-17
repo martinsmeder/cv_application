@@ -23,7 +23,22 @@
 15. ---
 16. ---
 17. ---
-18. Refactor code and remove as much code duplication as possible
+18. ---
 19. Style and finish project
 
-State needs to be added to App, so that forms and cv components can share 
+min width of divs 
+
+CV 
+- Positiong of text 
+- Color contacts 
+- Box around headings 
+Forms
+- Top buttons 
+- Contacts 
+- Education 
+- Experience 
+finish
+- Icons 
+- Colors 
+- Fonts 
+- Media queries 

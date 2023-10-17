@@ -14,12 +14,16 @@ export function CvContacts({ contacts }) {
 export function CvEducation({ educations }) {
   return (
     <section className='cvSection education'>
-      <h1>EDUCATION</h1>
+      <div className='headingContainer'>
+        <h1>Education</h1>
+      </div>
       {educations.map((item) => (
         <div key={item.schoolName}>
-          <p>{item.schoolName}</p>
-          <p>{item.studyTitle}</p>
-          <p>{item.studyDates}</p>
+          <p className='dates'>{item.studyDates}</p>
+          <div className='rightDiv'>
+            <p>{item.schoolName}</p>
+            <p>{item.studyTitle}</p>
+          </div>
         </div>
       ))}
     </section>
@@ -29,13 +33,17 @@ export function CvEducation({ educations }) {
 export function CvExperience({ experiences }) {
   return (
     <section className='cvSection experience'>
-      <h1>EXPERIENCES</h1>
+      <div className='headingContainer'>
+        <h1>Professional Experience</h1>
+      </div>
       {experiences.map((item) => (
         <div key={item.companyName}>
-          <p>{item.companyName}</p>
-          <p>{item.positionTitle}</p>
-          <p>{item.responsibilities}</p>
-          <p>{item.employmentDates}</p>
+          <p className='dates'>{item.employmentDates}</p>
+          <div className='rightDiv'>
+            <p>{item.companyName}</p>
+            <p>{item.positionTitle}</p>
+            <p>{item.responsibilities}</p>
+          </div>
         </div>
       ))}
     </section>
