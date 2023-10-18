@@ -1,0 +1,123 @@
+.form {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    gap: 5px;
+    padding: 5px;
+    padding-bottom: 0px;
+}
+ 
+ 
+.formSection {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     gap: 10px;
+     padding: 10px;
+}
+
+.buttons.example {
+    align-self: center;
+    width: 92%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.buttons.formBtn {
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    background-color: #000;
+    border: 1px solid #FFF;
+    font-weight: bold;
+    color: #FFF;
+    border-radius: 7px;
+    padding: 5px;
+    cursor: pointer;
+    transition: all .07s ease;
+    box-shadow: 0 0 .5rem #000;
+}
+
+.buttons.example button:active {
+    transform: scale(1.1);
+}
+
+.headingContainer.forms {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background: #000;
+    color: #FFF;
+    font-size: .9rem;
+    padding: 5px;
+    border: 1px solid #FFF;
+    border-radius: 10px;
+    box-shadow: 0 0 .3rem #000;
+}
+
+input,
+textarea {
+    /* Reset style */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* Add style */
+    width: 100%;
+    border: 2px solid #000;
+    border-radius: 5px;
+    box-shadow: 0 0 .3rem #000;
+    font: .9rem / 1rem sans-serif;
+    padding: 0.3rem 0.5rem;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+}
+
+textarea {
+    min-height: 10rem;
+    resize: none;
+}
+
+.list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+.listItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    box-shadow: 0 0 .3rem #000;
+}
+
+.listItem p {
+    font-weight: bold;
+}
+
+.icons {
+    display: flex;
+    gap: 3px;
+}
+
+img {
+    width: 20px;
+    height: 20px;
+}
+
+img:hover {
+    cursor: pointer;
+}

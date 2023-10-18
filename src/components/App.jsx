@@ -154,7 +154,9 @@ export default function App() {
         </div>
 
         <section className='formSection contacts'>
-          <h3>Contact details</h3>
+          <div className='headingContainer forms'>
+            <h3>Contact Details</h3>
+          </div>
           <ContactForm
             fullNameValue={contactDetails.fullName}
             emailValue={contactDetails.email}
@@ -168,7 +170,9 @@ export default function App() {
         </section>
 
         <section className='formSection education'>
-          <h3>Education</h3>
+          <div className='headingContainer forms'>
+            <h3>Education</h3>
+          </div>
           <button
             onClick={() =>
               handleAddNewClick(
@@ -183,7 +187,7 @@ export default function App() {
               )
             }
           >
-            Add new
+            + Add New
           </button>
           <EducationForm
             showForm={showEducationForm}
@@ -219,7 +223,9 @@ export default function App() {
         </section>
 
         <section className='formSection experience'>
-          <h3>Experience</h3>
+          <div className='headingContainer forms'>
+            <h3>Experience</h3>
+          </div>
           <button
             onClick={() =>
               handleAddNewClick(
@@ -235,7 +241,7 @@ export default function App() {
               )
             }
           >
-            Add new
+            + Add New
           </button>
           <ExperienceForm
             showForm={showExperienceForm}

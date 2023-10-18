@@ -14,7 +14,7 @@ export function CvContacts({ contacts }) {
 export function CvEducation({ educations }) {
   return (
     <section className='cvSection education'>
-      <div className='headingContainer'>
+      <div className='headingContainer cv'>
         <h1>Education</h1>
       </div>
       {educations.map((item) => (
@@ -33,7 +33,7 @@ export function CvEducation({ educations }) {
 export function CvExperience({ experiences }) {
   return (
     <section className='cvSection experience'>
-      <div className='headingContainer'>
+      <div className='headingContainer cv'>
         <h1>Professional Experience</h1>
       </div>
       {experiences.map((item) => (

@@ -26,19 +26,23 @@
 18. ---
 19. Style and finish project
 
-min width of divs 
+Bug
+Clicking edit, then cancel, then add new - will still edit the one that was 
+clicked before add new, so probably need to turn of isEditing 
 
 CV 
-- Positiong of text 
-- Color contacts 
-- Box around headings 
+- ---
+- ---
+- ---
+- ---
 Forms
-- Top buttons 
-- Contacts 
-- Education 
-- Experience 
+- ---
+- ---
+- ---
+- ---
 finish
-- Icons 
-- Colors 
+- Change so that CV and form height don't depend on each other
+- ---
+- ---
 - Fonts 
 - Media queries 
