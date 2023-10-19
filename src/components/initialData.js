@@ -7,11 +7,13 @@ export const initialContacts = {
 
 export const initialEducations = [
   {
+    id: 1,
     schoolName: 'Sample School 1',
     studyTitle: 'Bachelor of Science',
     studyDates: '08/2015 - 06/2018',
   },
   {
+    id: 2,
     schoolName: 'Sample School 2',
     studyTitle: 'Master of Arts',
     studyDates: '08/2012 - 06/2015',
@@ -20,6 +22,7 @@ export const initialEducations = [
 
 export const initialExperiences = [
   {
+    id: 1,
     companyName: 'Company A',
     positionTitle: 'Marketing Specialist',
     responsibilities:
@@ -27,6 +30,7 @@ export const initialExperiences = [
     employmentDates: '08/2022 - Present',
   },
   {
+    id: 2,
     companyName: 'Company B',
     positionTitle: 'Project Manager',
     responsibilities:
@@ -34,6 +38,7 @@ export const initialExperiences = [
     employmentDates: '08/2019 - 06/2022',
   },
   {
+    id: 3,
     companyName: 'Company C',
     positionTitle: 'Software Developer',
     responsibilities:

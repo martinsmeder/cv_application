@@ -16,6 +16,7 @@ export default function App() {
   const [educations, setEducations] = useState(initialEducations);
 
   const [educationFormData, setEducationFormData] = useState({
+    id: null,
     schoolName: '',
     studyTitle: '',
     studyDates: '',
@@ -24,6 +25,7 @@ export default function App() {
   const [experiences, setExperiences] = useState(initialExperiences);
 
   const [experienceFormData, setExperienceFormData] = useState({
+    id: null,
     companyName: '',
     positionTitle: '',
     responsibilities: '',
@@ -37,6 +39,15 @@ export default function App() {
   const [isEditing, setIsEditing] = useState(false);
 
   const [currentIndex, setCurrentIndex] = useState(null);
+
+  // =============================== HELPERS ===============================
+  function generateUniqueId(array) {
+    // Find the maximum ID in the array
+    const maxId = Math.max(...array.map((item) => item.id));
+
+    // Increment the highest number by 1;
+    return maxId + 1;
+  }
 
   // ========================== HANDLERS ==============================
   function handleContactChange(e, propertyName) {
@@ -67,7 +78,11 @@ export default function App() {
   ) {
     e.preventDefault();
     if (!isEditing) {
-      const newItem = { ...formData }; // Create a new object with form data
+      const newItem = {
+        // Create a new object with form data
+        ...formData,
+        id: generateUniqueId(stateVariable),
+      };
       setStateVariable([...stateVariable, newItem]); // Add to array
       setFormData(resetCallback); // Reset form
       setShowEducationForm(false);
@@ -75,6 +90,7 @@ export default function App() {
     } else {
       const newStateArray = [...stateVariable]; // Copy original array
       newStateArray[currentIndex] = formData; // Replace at old item index
+      newStateArray[currentIndex].id = generateUniqueId(stateVariable); // Add ID
       setStateVariable(newStateArray); // Update state with edited object
       setFormData(resetCallback); // Reset form
       setIsEditing(false); // Reset isEditing flag
@@ -106,16 +122,17 @@ export default function App() {
     setShowExperienceForm(true);
   }
 
+  function handleCancelClick(setShowForm, value) {
+    setShowForm(value);
+    setIsEditing(false);
+  }
+
   function handleEducationDeleteClick(education) {
-    setEducations(
-      educations.filter((item) => item.schoolName !== education.schoolName)
-    );
+    setEducations(educations.filter((item) => item.id !== education.id));
   }
 
   function handleExperienceDeleteClick(experience) {
-    setExperiences(
-      experiences.filter((item) => item.companyName !== experience.companyName)
-    );
+    setExperiences(experiences.filter((item) => item.id !== experience.id));
   }
 
   function handleAddNewClick(
@@ -213,7 +230,9 @@ export default function App() {
             changeCallback={(e) =>
               handleChange(e, setEducationFormData, educationFormData)
             }
-            cancelCallback={() => setShowEducationForm(false)}
+            cancelCallback={() =>
+              handleCancelClick(setShowEducationForm, false)
+            }
           />
           <EducationList
             educations={educations}
@@ -269,7 +288,9 @@ export default function App() {
             changeCallback={(e) =>
               handleChange(e, setExperienceFormData, experienceFormData)
             }
-            cancelCallback={() => setShowExperienceForm(false)}
+            cancelCallback={() =>
+              handleCancelClick(setShowExperienceForm, false)
+            }
           />
           <ExperienceList
             experiences={experiences}

@@ -14,11 +14,14 @@ export function CvContacts({ contacts }) {
 export function CvEducation({ educations }) {
   return (
     <section className='cvSection education'>
-      <div className='headingContainer cv'>
-        <h1>Education</h1>
-      </div>
+      {educations.length > 0 ? (
+        <div className='headingContainer cv'>
+          <h1>Education</h1>
+        </div>
+      ) : null}
+
       {educations.map((item) => (
-        <div key={item.schoolName}>
+        <div key={item.id}>
           <p className='dates'>{item.studyDates}</p>
           <div className='rightDiv'>
             <p>{item.schoolName}</p>
@@ -33,11 +36,14 @@ export function CvEducation({ educations }) {
 export function CvExperience({ experiences }) {
   return (
     <section className='cvSection experience'>
-      <div className='headingContainer cv'>
-        <h1>Professional Experience</h1>
-      </div>
+      {experiences.length > 0 ? (
+        <div className='headingContainer cv'>
+          <h1>Professional Experience</h1>
+        </div>
+      ) : null}
+
       {experiences.map((item) => (
-        <div key={item.companyName}>
+        <div key={item.id}>
           <p className='dates'>{item.employmentDates}</p>
           <div className='rightDiv'>
             <p>{item.companyName}</p>

@@ -27,8 +27,7 @@
 19. Style and finish project
 
 Bug
-Clicking edit, then cancel, then add new - will still edit the one that was 
-clicked before add new, so probably need to turn of isEditing 
+---
 
 CV 
 - ---
