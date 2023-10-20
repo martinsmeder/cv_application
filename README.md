@@ -1,8 +1,13 @@
-# React + Vite
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Live demo: https://cv-application-psi-six.vercel.app/
 
-Currently, two official plugins are available:
+A simple CV application built with React.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Some things I've learned:
+
+- How to work with Vite instead of Webpack for bundling code
+- JSX syntax
+- How to structure code into components
+- How to work with props
+- How to work with and manage state
