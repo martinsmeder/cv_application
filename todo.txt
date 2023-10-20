@@ -24,7 +24,7 @@
 16. ---
 17. ---
 18. ---
-19. Style and finish project
+19. ---
 
 Bug
 ---
@@ -40,8 +40,10 @@ Forms
 - ---
 - ---
 finish
-- Change so that CV and form height don't depend on each other
 - ---
 - ---
-- Fonts 
-- Media queries 
+- ---
+- ---
+- ---
+- Run build and remove unnessecary files
+- Publish 
